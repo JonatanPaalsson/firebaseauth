@@ -26,10 +26,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        
         <p>{firebase.auth().currentUser?.displayName} is sign in!</p>
         <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
-
       </header>
     </div>
   );
