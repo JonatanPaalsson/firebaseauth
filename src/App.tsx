@@ -1,23 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import firebase from 'firebase/compat/app';
+import SignIn from './SignIn';
+import config from "./firebaseconfig.json"
+import 'firebase/compat/auth';
 import './App.css';
 
+firebase.initializeApp(config);
+
 function App() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      setIsSignedIn(!!user);
+    });
+    return () => unregisterAuthObserver();
+  }, []);
+
+  if (!isSignedIn) {
+    return (
+      <SignIn />
+    )
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        
+        <p>{firebase.auth().currentUser?.displayName} is sign in!</p>
+        <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
+
       </header>
     </div>
   );
