@@ -1,14 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Root from "./routes/root";
 import reportWebVitals from './reportWebVitals';
+import Public from './routes/Public';
+import ProtectedRouteWrapper from './routes/ProtectedRouteWrapper';
+import { LoginProvider } from './LoginContext';
+import Protected from './routes/Protected';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+  },
+  {
+    path: "/public",
+    element: <Public />
+  },
+  {
+    path: "/protected",
+    element: <ProtectedRouteWrapper><Protected /></ProtectedRouteWrapper>
+    
+  }
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <App />
+  <LoginProvider>
+    <RouterProvider router={router} />
+  </LoginProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

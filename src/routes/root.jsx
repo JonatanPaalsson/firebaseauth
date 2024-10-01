@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import firebase from 'firebase/compat/app';
-import SignIn from './SignIn';
-import config from "./firebaseconfig.json"
+import SignIn from '../SignIn';
+import config from "../firebaseconfig.json"
 import 'firebase/compat/auth';
-import './App.css';
+import '../App.css';
 
 firebase.initializeApp(config);
 
-function App() {
+function Root() {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ function App() {
   );
 }
 
-export default App;
+export default Root;
